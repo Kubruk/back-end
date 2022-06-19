@@ -1,10 +1,11 @@
 const { Router } = require("express")
 const router = Router()
 const { getUser, createUser, renewToken } = require("../controllers/auth")
+const { baseValidation, newUserValidation } = require("../middleware/auth")
 
-router.post("/", getUser)
+router.post("/", baseValidation, getUser)
 
-router.post("/new", createUser)
+router.post("/new", newUserValidation, createUser)
 
 router.get("/renew", renewToken)
 
