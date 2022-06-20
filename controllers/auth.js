@@ -1,42 +1,52 @@
-const { request, response } = require("express")
-
+const { request, response } = require("express");
+const User = require("../models/User");
 
 const getUser = (req = request, res = response) => {
-    res.json({
-        ok: true,
-        msg: "login"
-    })
-}
+  res.json({
+    ok: true,
+    msg: "login",
+  });
+};
 
-const createUser = (req = request, res = response) => {
-    const { name, email, password } = req.body
+const createUser = async (req = request, res = response) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const user = new User(req.body);
+    await user.save();
 
     res.status(201).json({
-        ok: true,
-        msg: "new",
-        user: {
-            name,
-            email,
-            password
-        }
-    })
-}
+      ok: true,
+      msg: "new",
+      user: {
+        name,
+        email,
+        password,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      error: "Something happens",
+    });
+  }
+};
 
 const renewToken = (req = request, res = response) => {
-    const { email, password } = req.body
+  const { email, password } = req.body;
 
-    res.json({
-        ok: true,
-        msg: "renew",
-        user: {
-            email,
-            password
-        }
-    })
-}
+  res.json({
+    ok: true,
+    msg: "renew",
+    user: {
+      email,
+      password,
+    },
+  });
+};
 
 module.exports = {
-    getUser,
-    createUser,
-    renewToken
-}
+  getUser,
+  createUser,
+  renewToken,
+};
