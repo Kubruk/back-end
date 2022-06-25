@@ -12,12 +12,10 @@ const validateJWT = (req, res = response, next) => {
   }
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SEED);
+    const { uid, name } = jwt.verify(token, process.env.JWT_SEED);
 
-    console.log(payload);
-
-    req.uid = payload.uid;
-    req.name = payload.name;
+    req.uid = uid;
+    req.name = name;
   } catch (error) {
     return res.status(401).json({
       ok: false,
