@@ -21,6 +21,7 @@ const createBook = async (req = request, res = response) => {
   const book = new Book(req.body);
 
   try {
+    book.user = req.uid;
     const newBook = await book.save();
 
     res.json({
