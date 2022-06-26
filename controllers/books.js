@@ -3,7 +3,7 @@ const { bookSchema: Book } = require("../models/Book");
 
 const getAllBooks = async (req = request, res = response) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find().populate("user", "name");
 
     res.json({
       ok: true,
