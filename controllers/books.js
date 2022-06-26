@@ -1,4 +1,5 @@
 const { request, response } = require("express");
+const { bookSchema: Book } = require("../models/Book");
 
 const getAllBooks = async (req = request, res = response) => {
   res.json({
@@ -17,12 +18,22 @@ const getOneBook = async (req = request, res = response) => {
 };
 
 const createBook = async (req = request, res = response) => {
-  res.json({
-    ok: true,
-    Book: {
-      title: "test",
-    },
-  });
+  const book = new Book(req.body);
+
+  try {
+    const newBook = await book.save();
+
+    res.json({
+      ok: true,
+      book: newBook,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      error: "Something happens",
+    });
+  }
 };
 
 const editBook = async (req = request, res = response) => {

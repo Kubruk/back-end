@@ -38,6 +38,7 @@ const loginUser = async (req = request, res = response) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       ok: false,
       error: "Something happens",
@@ -75,6 +76,7 @@ const createUser = async (req = request, res = response) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       ok: false,
       error: "Something happens",

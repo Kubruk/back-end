@@ -7,18 +7,19 @@ const BookSchema = Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: userModelName,
+    required: true,
   },
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
   portrait: {
     type: String,
-    require: true,
+    required: true,
     default: "",
   },
   genres: {
