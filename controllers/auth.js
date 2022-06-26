@@ -54,7 +54,7 @@ const createUser = async (req = request, res = response) => {
     if (user) {
       return res.status(400).json({
         ok: false,
-        error: "The credentials aren't valid",
+        error: "These user already exists",
       });
     }
 

@@ -7,7 +7,7 @@ const {
   editBook,
   deleteBook,
 } = require("../controllers/books");
-const { baseValidation } = require("../middlewares/auth-validation");
+const { baseValidation } = require("../middlewares/book-validation");
 const { validateJWT } = require("../middlewares/validate-jwt.js");
 
 router.get("/", getAllBooks);
