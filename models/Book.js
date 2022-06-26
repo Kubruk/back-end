@@ -5,7 +5,7 @@ const MODEL_NAME = "Book";
 
 const BookSchema = Schema(
   {
-    user: {
+    author: {
       type: Schema.Types.ObjectId,
       ref: userModelName,
       required: true,
@@ -18,7 +18,7 @@ const BookSchema = Schema(
       type: String,
       required: true,
     },
-    portrait: {
+    cover: {
       type: String,
       required: true,
       default: "",
