@@ -95,8 +95,17 @@ const renewToken = async (req = request, res = response) => {
   });
 };
 
+const logout = async (req = request, res = response) => {
+  // TODO: Logout
+  res.json({
+    ok: true,
+    msg: "logged out",
+  });
+};
+
 module.exports = {
   loginUser,
   createUser,
   renewToken,
+  logout,
 };
