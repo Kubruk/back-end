@@ -48,12 +48,46 @@ const createBook = async (req = request, res = response) => {
 };
 
 const editBook = async (req = request, res = response) => {
-  res.json({
-    ok: true,
-    Book: {
-      title: "test",
-    },
-  });
+  try {
+    const bookId = req.params.id;
+    const uid = req.uid;
+
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      return res.status(404).json({
+        ok: false,
+        error: "This book doesn't exist",
+      });
+    }
+
+    if (book.author.toString() !== uid) {
+      return res.status(401).json({
+        ok: false,
+        error: "Unauthorized",
+      });
+    }
+
+    const newBook = {
+      ...req.body,
+      author: uid,
+    };
+
+    const bookUpdated = await Book.findByIdAndUpdate(book.id, newBook, {
+      new: true,
+    });
+
+    res.json({
+      ok: true,
+      book: bookUpdated,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      error: "Something happens",
+    });
+  }
 };
 
 const deleteBook = async (req = request, res = response) => {
