@@ -19,13 +19,29 @@ const getAllBooks = async (req = request, res = response) => {
 };
 
 const getOneBook = async (req = request, res = response) => {
-  // TODO: Get One Single Book
-  res.json({
-    ok: true,
-    Book: {
-      title: "test",
-    },
-  });
+  try {
+    const bookId = req.params.id;
+
+    const book = await Book.findById(bookId).populate("author", "name");
+
+    if (!book) {
+      return res.status(404).json({
+        ok: false,
+        error: "This book doesn't exist",
+      });
+    }
+
+    res.json({
+      ok: true,
+      book,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      error: "Something happens",
+    });
+  }
 };
 
 const createBook = async (req = request, res = response) => {
