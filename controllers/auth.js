@@ -59,6 +59,15 @@ const createUser = async (req = request, res = response) => {
       });
     }
 
+    user = await User.findOne({ name });
+
+    if (user) {
+      return res.status(400).json({
+        ok: false,
+        error: "This name is already taken",
+      });
+    }
+
     user = new User(req.body);
     const salt = bcrypt.genSaltSync();
     user.password = bcrypt.hashSync(password, salt);
