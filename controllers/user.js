@@ -7,7 +7,6 @@ const getUser = async (req = request, res = response) => {
     const userId = req.params.id;
 
     const user = await User.findById(userId);
-    const books = await Book.find({ author: userId });
 
     if (!user) {
       return res.status(404).json({
@@ -19,6 +18,32 @@ const getUser = async (req = request, res = response) => {
     res.status(200).json({
       ok: true,
       user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      error: "Something happens",
+    });
+  }
+};
+
+const getUserBooks = async (req = request, res = response) => {
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findById(userId);
+    const books = await Book.find({ author: userId });
+
+    if (!user) {
+      return res.status(404).json({
+        ok: false,
+        error: "This user doesn't exist",
+      });
+    }
+
+    res.status(200).json({
+      ok: true,
       books,
     });
   } catch (error) {
@@ -32,4 +57,5 @@ const getUser = async (req = request, res = response) => {
 
 module.exports = {
   getUser,
+  getUserBooks,
 };
