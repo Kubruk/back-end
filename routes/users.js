@@ -1,10 +1,9 @@
 const { Router } = require("express");
 const router = Router();
-const { getUser, getUserBooks } = require("../controllers/user");
+const { getUserProfile } = require("../controllers/user");
 const { validateJWT } = require("../middlewares/validate-jwt.js");
 
-router.get("/:id", getUser);
-router.get("/:id/books", getUserBooks);
+router.get("/:id", getUserProfile);
 
 router.use(validateJWT);
 
